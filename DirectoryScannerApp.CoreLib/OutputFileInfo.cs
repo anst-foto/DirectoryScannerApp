@@ -3,11 +3,19 @@
 namespace DirectoryScannerApp.CoreLib;
 
 //TODO Добавить unit-тесты
+/// <summary>
+/// Класс для записи информации о файлах в файл
+/// </summary>
 public static class OutputFileInfo //TODO Добавить наследование
 {
     //TODO Добавить поддержку логгирования 
     
-    //TODO Рассказать про XMLDoc-комментарии
+    /// <summary>
+    /// Сохраняет информацию о файлах в json-файл
+    /// </summary>
+    /// <param name="files">Список информации о файлах</param>
+    /// <param name="path">Путь к файлу для сохранения</param>
+    /// <exception cref="Exception">Ошибка сохранения данных</exception>
     public static void WriteAllToJson(IEnumerable<FileInfoDto> files, string path = "output.json")
     {
         try

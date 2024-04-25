@@ -1,10 +1,14 @@
 ﻿namespace DirectoryScannerApp.CoreLib;
 
 //TODO Добавить unit-тесты
-public sealed class DirectoryScanner //TODO Рассказать про sealed
+/// <summary>
+/// Сканирует директории
+/// </summary>
+public sealed class DirectoryScanner
 {
-    private readonly string _directoryPath;
-    public required string DirectoryPath
+    private readonly string? _directoryPath;
+    /// <value>Директория для сканирования</value>
+    public required string? DirectoryPath
     {
         get => _directoryPath;
         init
@@ -17,8 +21,14 @@ public sealed class DirectoryScanner //TODO Рассказать про sealed
         }
     }
 
+    /// <summary>
+    /// Получает списоком информацию о файлах в директории
+    /// </summary>
+    /// <returns>Список информации о файлах в директории</returns>
     public IEnumerable<FileInfoDto> Scan()
     {
+        if (DirectoryPath == null) yield break;
+        
         var directoryInfo = new DirectoryInfo(DirectoryPath);
         var files = directoryInfo.GetFiles();
         

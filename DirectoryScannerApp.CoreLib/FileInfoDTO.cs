@@ -1,10 +1,14 @@
 ﻿namespace DirectoryScannerApp.CoreLib;
 
 //TODO Добавить unit-тесты
+/// <summary>
+/// Информация о файле
+/// </summary>
 public record FileInfoDto
 {
-    private readonly string _name;
-    public required string Name
+    private readonly string? _name;
+    /// <value>Имя файла</value>
+    public required string? Name
     {
         get => _name;
         init
@@ -14,8 +18,9 @@ public record FileInfoDto
         }
     }
     
-    private readonly string _extension;
-    public required string Extension
+    private readonly string? _extension;
+    /// <value>Расширение файла</value>
+    public required string? Extension
     {
         get => _extension;
         init
@@ -25,9 +30,12 @@ public record FileInfoDto
         }
     }
     
-    private readonly string _path;
-
-    public required string Path
+    /// <value>Полное имя файла</value>
+    public string FullName => $"{Name}.{Extension}";
+    
+    private readonly string? _path;
+    /// <value>Путь к файлу</value>
+    public required string? Path
     {
         get => _path;
         init
@@ -38,6 +46,7 @@ public record FileInfoDto
     }
     
     private readonly long _size;
+    /// <value>Размер файла</value>
     public required long Size
     {
         get => _size;
