@@ -89,14 +89,36 @@ note left of DirectoryScanner::DirectoryPath
     properties, readonly, required
 end note
 
-Error <-- OutputFileInfo
-FileInfoDto <-- OutputFileInfo
-class OutputFileInfo 
+
+interface IOutputFileInfo 
 {
-    + {static} void WriteAllToJson(IEnumerable<FileInfoDto> files, string path = "output.json")
+    + {abstract} void WriteAll()
 }
-note right of OutputFileInfo
-    static
+
+FileInfoDto <-- OutputFileInfoBase
+IOutputFileInfo <|.. OutputFileInfoBase
+abstract class OutputFileInfoBase
+{
+    # IEnumerable<FileInfoDto> fileInfos
+    # string filePath
+    
+    # OutputFileInfoBase(IEnumerable<FileInfoDto> fileInfos, string filePath)
+    
+    + {abstract} void WriteAll()
+}
+note left of OutputFileInfoBase::fileInfos
+    readonly
 end note
+note left of OutputFileInfoBase::filePath
+    readonly
+end note
+
+OutputFileInfoBase <|-- OutputFileInfoToJson
+class OutputFileInfoToJson
+{
+    + OutputFileInfoToJson(IEnumerable<FileInfoDto> fileInfos, string filePath = "file_infos.json")
+    
+    + void WriteAll()
+}
 
 @enduml
