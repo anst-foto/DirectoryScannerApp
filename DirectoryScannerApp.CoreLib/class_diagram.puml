@@ -1,0 +1,102 @@
+﻿@startuml
+'https://plantuml.com/class-diagram
+
+enum ErrorType 
+{
+    Unknown,
+    EmptyFileName,
+    EmptyExtension,
+    NegativeFileSize,
+    EmptyFilePath,
+    EmptyDirectoryPath,
+    NotExistDirectory,
+    NotExistFile,
+    EmptyDirectory,
+}
+
+ErrorType <-- Error
+class Error 
+{
+    + {static} Dictionary<ErrorType, string> Messages
+    + {static} void ThrowIfNullOrEmpty(string? value, string paramName, string message)
+    + {static} void ThrowIfLessThan(long value, int i, string sizeName, string message)
+    + {static} void ThrowIfNegative(long value, string paramName, string message)
+    + {static} void ThrowIfNotExist(string? path)
+    + {static} void ThrowIfEmptyCollection(IEnumerable<object> collection, string message)
+}
+note right of Error
+    static
+end note
+note left of Error::Messages
+    readonly
+end note
+note left of Error::ThrowIfNullOrEmpty
+    throw new ArgumentNullException(paramName, message)
+end note
+note left of Error::ThrowIfLessThan
+    throw new ArgumentOutOfRangeException(sizeName, message)
+end note
+note left of Error::ThrowIfNegative
+    throw new ArgumentOutOfRangeException(sizeName, message)
+end note
+note left of Error::ThrowIfNotExist
+    throw new DirectoryNotFoundException($"{Messages[ErrorType.NotExistDirectory]} ({path})")
+    throw new FileNotFoundException($"{Messages[ErrorType.NotExistFile]} ({path})")
+end note
+note left of Error::ThrowIfEmptyCollection
+    throw new ArgumentException(message)
+end note
+
+Error <-- FileInfoDto
+class FileInfoDto 
+{
+    + string? Name
+    + string? Extension
+    + string FullName
+    + string? Path
+    + long Size
+}
+note right of FileInfoDto
+    record
+end note
+note left of FileInfoDto::Name
+    properties, readonly, required
+end note
+note left of FileInfoDto::Extension
+    properties, readonly, required
+end note
+note left of FileInfoDto::FullName
+    properties, calculated
+end note
+note left of FileInfoDto::Path
+    properties, readonly, required
+end note
+note left of FileInfoDto::Size
+    properties, readonly, required
+end note
+
+Error <-- DirectoryScanner
+FileInfoDto <-- DirectoryScanner
+class DirectoryScanner 
+{
+    + string? DirectoryPath
+    + IEnumerable<FileInfoDto> Scan()
+}
+note right of DirectoryScanner
+    sealed
+end note
+note left of DirectoryScanner::DirectoryPath
+    properties, readonly, required
+end note
+
+Error <-- OutputFileInfo
+FileInfoDto <-- OutputFileInfo
+class OutputFileInfo 
+{
+    + {static} void WriteAllToJson(IEnumerable<FileInfoDto> files, string path = "output.json")
+}
+note right of OutputFileInfo
+    static
+end note
+
+@enduml
