@@ -2,11 +2,17 @@
 
 //TODO Добавить unit-тесты
 /// <summary>
-/// Информация о файле
+///     Информация о файле
 /// </summary>
 public record FileInfoDto
 {
+    private readonly string? _extension;
     private readonly string? _name;
+
+    private readonly string? _path;
+
+    private readonly long _size;
+
     /// <value>Имя файла</value>
     public required string? Name
     {
@@ -17,8 +23,7 @@ public record FileInfoDto
             _name = value;
         }
     }
-    
-    private readonly string? _extension;
+
     /// <value>Расширение файла</value>
     public required string? Extension
     {
@@ -29,11 +34,10 @@ public record FileInfoDto
             _extension = value;
         }
     }
-    
+
     /// <value>Полное имя файла</value>
     public string FullName => $"{Name}.{Extension}";
-    
-    private readonly string? _path;
+
     /// <value>Путь к файлу</value>
     public required string? Path
     {
@@ -44,8 +48,7 @@ public record FileInfoDto
             _path = value;
         }
     }
-    
-    private readonly long _size;
+
     /// <value>Размер файла</value>
     public required long Size
     {
