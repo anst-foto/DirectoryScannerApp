@@ -11,4 +11,10 @@
     <ProjectReference Include="..\DirectoryScannerApp.CoreLib\DirectoryScannerApp.CoreLib.csproj"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="log_colors.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

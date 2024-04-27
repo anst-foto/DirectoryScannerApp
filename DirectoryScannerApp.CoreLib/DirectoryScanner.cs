@@ -1,4 +1,6 @@
-﻿namespace DirectoryScannerApp.CoreLib;
+﻿using Logger;
+
+namespace DirectoryScannerApp.CoreLib;
 
 //TODO Добавить unit-тесты
 /// <summary>
@@ -6,19 +8,21 @@
 /// </summary>
 public sealed class DirectoryScanner
 {
-    private readonly string? _directoryPath;
+    public ILogger? Logger { get; init; }
 
+    private readonly string? _directoryPath;
     /// <value>Директория для сканирования</value>
     public required string? DirectoryPath
     {
         get => _directoryPath;
         init
         {
-            Error.ThrowIfNullOrEmpty(value, nameof(DirectoryPath), Error.Messages[ErrorType.EmptyDirectoryPath]);
-            Error.ThrowIfNotExist(value);
+            Error.ThrowIfNullOrEmpty(value, nameof(DirectoryPath), ErrorType.EmptyDirectoryPath, Logger);
+            Error.ThrowIfNotExistsDirectory(value, Logger);
             //TODO Сделать проверку на длинну имени директории
 
             _directoryPath = value;
+            Logger?.Success($"Установлена директория {value}");
         }
     }
 
@@ -30,20 +34,25 @@ public sealed class DirectoryScanner
     {
         if (DirectoryPath == null)
         {
+            Logger?.Error($"{Error.Messages[ErrorType.EmptyDirectoryPath]} ({nameof(DirectoryPath)})");
             yield break;
         }
 
         var directoryInfo = new DirectoryInfo(DirectoryPath);
         var files = directoryInfo.GetFiles();
+        Logger?.Info($"Всего файлов в директории {DirectoryPath} {files.Length}");
 
-        Error.ThrowIfEmptyCollection(files, Error.Messages[ErrorType.EmptyDirectory]);
+        Error.ThrowIfEmptyCollection(files, ErrorType.EmptyDirectory, Logger);
 
         foreach (var file in files)
         {
-            yield return new FileInfoDto
+            var fileInfoDto = new FileInfoDto
             {
                 Name = file.Name, Extension = file.Extension, Path = file.FullName, Size = file.Length
             };
+            Logger?.Info($"Информация о файле {fileInfoDto.Name}: {fileInfoDto.Size}");
+
+            yield return fileInfoDto;
         }
     }
 }

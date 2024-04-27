@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using System.Text.Encodings.Web;
+using System.Text.Json;
+using Logger;
 
 namespace DirectoryScannerApp.CoreLib.OutputFile;
 
@@ -12,8 +14,9 @@ public class OutputFileInfoToJson : OutputFileInfoBase
     /// </summary>
     /// <param name="fileInfos">Список информации о файлах</param>
     /// <param name="filePath">Путь к файлу. По умолчанию - file_infos.json</param>
-    public OutputFileInfoToJson(IEnumerable<FileInfoDto> fileInfos, string filePath = "file_infos.json")
-        : base(fileInfos, filePath)
+    /// <param name="logger">Логгер</param>
+    public OutputFileInfoToJson(IEnumerable<FileInfoDto> fileInfos, string filePath = "file_infos.json", ILogger? logger = null)
+        : base(fileInfos, filePath, logger)
     {
     }
 
@@ -25,12 +28,18 @@ public class OutputFileInfoToJson : OutputFileInfoBase
     {
         try
         {
-            var json = JsonSerializer.Serialize(FileInfos);
+            var jsonOptions = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            };
+            var json = JsonSerializer.Serialize(FileInfos, jsonOptions);
             File.WriteAllText(FilePath, json);
+            Logger?.Success("Информация о файлах сохранена в JSON-файл");
         }
         catch (Exception e)
         {
-            //TODO: Добавить логгирование
+            Logger?.Error(e.Message);
             throw new Exception(Error.Messages[ErrorType.Unknown], e);
         }
     }

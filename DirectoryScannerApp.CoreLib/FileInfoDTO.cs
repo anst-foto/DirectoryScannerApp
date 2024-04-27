@@ -19,7 +19,7 @@ public record FileInfoDto
         get => _name;
         init
         {
-            Error.ThrowIfNullOrEmpty(value, nameof(Name), Error.Messages[ErrorType.EmptyFileName]);
+            Error.ThrowIfNullOrEmpty(value, nameof(Name), ErrorType.EmptyFileName);
             _name = value;
         }
     }
@@ -30,13 +30,10 @@ public record FileInfoDto
         get => _extension;
         init
         {
-            Error.ThrowIfNullOrEmpty(value, nameof(Extension), Error.Messages[ErrorType.EmptyExtension]);
+            Error.ThrowIfNullOrEmpty(value, nameof(Extension), ErrorType.EmptyExtension);
             _extension = value;
         }
     }
-
-    /// <value>Полное имя файла</value>
-    public string FullName => $"{Name}.{Extension}";
 
     /// <value>Путь к файлу</value>
     public required string? Path
@@ -44,7 +41,7 @@ public record FileInfoDto
         get => _path;
         init
         {
-            Error.ThrowIfNullOrEmpty(value, nameof(Path), Error.Messages[ErrorType.EmptyFilePath]);
+            Error.ThrowIfNullOrEmpty(value, nameof(Path), ErrorType.EmptyFilePath);
             _path = value;
         }
     }
@@ -55,7 +52,7 @@ public record FileInfoDto
         get => _size;
         init
         {
-            Error.ThrowIfNegative(value, nameof(Size), Error.Messages[ErrorType.NegativeFileSize]);
+            Error.ThrowIfNegative(value, nameof(Size), ErrorType.NegativeFileSize);
             _size = value;
         }
     }
