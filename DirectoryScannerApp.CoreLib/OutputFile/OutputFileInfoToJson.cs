@@ -15,7 +15,8 @@ public class OutputFileInfoToJson : OutputFileInfoBase
     /// <param name="fileInfos">Список информации о файлах</param>
     /// <param name="filePath">Путь к файлу. По умолчанию - file_infos.json</param>
     /// <param name="logger">Логгер</param>
-    public OutputFileInfoToJson(IEnumerable<FileInfoDto> fileInfos, string filePath = "file_infos.json", ILogger? logger = null)
+    public OutputFileInfoToJson(IEnumerable<FileInfoDto> fileInfos, string filePath = "file_infos.json",
+        ILogger? logger = null)
         : base(fileInfos, filePath, logger)
     {
     }
@@ -30,8 +31,7 @@ public class OutputFileInfoToJson : OutputFileInfoBase
         {
             var jsonOptions = new JsonSerializerOptions
             {
-                WriteIndented = true,
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+                WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
             };
             var json = JsonSerializer.Serialize(FileInfos, jsonOptions);
             File.WriteAllText(FilePath, json);

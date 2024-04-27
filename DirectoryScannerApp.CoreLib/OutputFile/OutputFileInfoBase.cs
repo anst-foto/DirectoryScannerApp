@@ -7,14 +7,14 @@ namespace DirectoryScannerApp.CoreLib.OutputFile;
 /// </summary>
 public abstract class OutputFileInfoBase : IOutputFileInfo
 {
-    /// <summary>Логгер</summary>
-    protected ILogger? Logger;
-
     /// <summary>Информация о файлах</summary>
     protected readonly IEnumerable<FileInfoDto> FileInfos;
 
     /// <summary>Путь к файлу</summary>
     protected readonly string FilePath;
+
+    /// <summary>Логгер</summary>
+    protected ILogger? Logger;
 
     /// <summary>
     ///     Конструктор класса
@@ -24,8 +24,8 @@ public abstract class OutputFileInfoBase : IOutputFileInfo
     /// <param name="logger">Логгер</param>
     protected OutputFileInfoBase(IEnumerable<FileInfoDto> fileInfos, string filePath, ILogger? logger = null)
     {
-        this.FileInfos = fileInfos;
-        this.FilePath = filePath;
+        FileInfos = fileInfos;
+        FilePath = filePath;
 
         Logger = logger;
     }

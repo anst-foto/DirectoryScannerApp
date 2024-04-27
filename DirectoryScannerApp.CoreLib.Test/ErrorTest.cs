@@ -1,6 +1,4 @@
-using DirectoryScannerApp.CoreLib;
-
-namespace DirectoryScanerApp.CoreLib.Test;
+namespace DirectoryScannerApp.CoreLib.Test;
 
 public class ErrorTest
 {
@@ -8,18 +6,18 @@ public class ErrorTest
     public void ThrowIfNullOrEmptyTest()
     {
         Assert.Throws<ArgumentNullException>(() => Error.ThrowIfNullOrEmpty(
-            value:"",
-            paramName:"",
-            errorType: ErrorType.Unknown));
+            "",
+            "",
+            ErrorType.Unknown));
     }
 
     [Fact]
     public void ThrowIfNegativeTest()
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => Error.ThrowIfNegative(
-            value:-1,
-            paramName:"",
-            errorType: ErrorType.Unknown));
+            -1,
+            "",
+            ErrorType.Unknown));
     }
 
     [Fact]
@@ -38,7 +36,7 @@ public class ErrorTest
     public void ThrowIfEmptyCollectionTest()
     {
         Assert.Throws<ArgumentException>(() => Error.ThrowIfEmptyCollection(
-            collection: new List<string>(),
-            errorType: ErrorType.Unknown));
+            new List<string>(),
+            ErrorType.Unknown));
     }
 }

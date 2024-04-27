@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirectoryScannerApp.Console
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirectoryScannerApp.CoreLib", "DirectoryScannerApp.CoreLib\DirectoryScannerApp.CoreLib.csproj", "{752C0DB7-21F9-4CD2-886B-508DC83FACDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirectoryScanerApp.CoreLib.Test", "DirectoryScanerApp.CoreLib.Test\DirectoryScanerApp.CoreLib.Test.csproj", "{ABB5117A-40D4-4B9B-AF8B-63A3C091F9E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirectoryScannerApp.CoreLib.Test", "DirectoryScannerApp.CoreLib.Test\DirectoryScannerApp.CoreLib.Test.csproj", "{ABB5117A-40D4-4B9B-AF8B-63A3C091F9E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

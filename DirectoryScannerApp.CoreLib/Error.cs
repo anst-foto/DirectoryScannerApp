@@ -16,7 +16,6 @@ public enum ErrorType
     EmptyDirectory
 }
 
-//TODO Добавить unit-тесты
 /// <summary>Класс для обработки ошибок и выброса исключений</summary>
 public static class Error
 {
@@ -40,11 +39,15 @@ public static class Error
     /// <param name="value">Проверяемая строка</param>
     /// <param name="paramName">Имя переменной (свойства), которое проверяется</param>
     /// <param name="errorType">Тип ошибки</param>
-    /// /// <param name="logger">Объект логгера</param>
+    /// ///
+    /// <param name="logger">Объект логгера</param>
     /// <exception cref="ArgumentNullException"></exception>
     public static void ThrowIfNullOrEmpty(string? value, string paramName, ErrorType errorType, ILogger? logger = null)
     {
-        if (!string.IsNullOrWhiteSpace(value)) return;
+        if (!string.IsNullOrWhiteSpace(value))
+        {
+            return;
+        }
 
         logger?.Error($"[{paramName}] {Messages[errorType]}");
         throw new ArgumentNullException(paramName, Messages[errorType]);
@@ -57,9 +60,11 @@ public static class Error
     /// <param name="number">Число с которым сравнивается</param>
     /// <param name="paramName">Имя переменной (свойства), которое проверяется</param>
     /// <param name="errorType">Тип ошибки</param>
-    /// /// <param name="logger">Объект логгера</param>
+    /// ///
+    /// <param name="logger">Объект логгера</param>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public static void ThrowIfLessThan(long value, int number, string paramName, ErrorType errorType, ILogger? logger = null)
+    public static void ThrowIfLessThan(long value, int number, string paramName, ErrorType errorType,
+        ILogger? logger = null)
     {
         if (value >= number)
         {
@@ -83,21 +88,24 @@ public static class Error
     }
 
     /// <summary>
-    /// Проверка на существование директории
+    ///     Проверка на существование директории
     /// </summary>
     /// <param name="path">Путь к директории</param>
     /// <param name="logger">Объект логгера</param>
     /// <exception cref="DirectoryNotFoundException"></exception>
     public static void ThrowIfNotExistsDirectory(string? path, ILogger? logger = null)
     {
-        if (Directory.Exists(path)) return;
+        if (Directory.Exists(path))
+        {
+            return;
+        }
 
         logger?.Error($"{Messages[ErrorType.NotExistDirectory]} ({path})");
         throw new DirectoryNotFoundException($"{Messages[ErrorType.NotExistDirectory]} ({path})");
     }
 
     /// <summary>
-    /// Проверка на существование файла
+    ///     Проверка на существование файла
     /// </summary>
     /// <param name="path">Путь к файлу</param>
     /// <param name="logger">Объект логгера</param>
@@ -121,7 +129,8 @@ public static class Error
     /// <param name="errorType">Тип ошибки</param>
     /// <param name="logger">Объект логгера</param>
     /// <exception cref="ArgumentException"></exception>
-    public static void ThrowIfEmptyCollection(IEnumerable<object> collection, ErrorType errorType, ILogger? logger = null)
+    public static void ThrowIfEmptyCollection(IEnumerable<object> collection, ErrorType errorType,
+        ILogger? logger = null)
     {
         if (collection.Any())
         {

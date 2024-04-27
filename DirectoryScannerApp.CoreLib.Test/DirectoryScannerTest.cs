@@ -1,4 +1,4 @@
-﻿namespace DirectoryScanerApp.CoreLib.Test;
+﻿namespace DirectoryScannerApp.CoreLib.Test;
 
 public class DirectoryScannerTest
 {

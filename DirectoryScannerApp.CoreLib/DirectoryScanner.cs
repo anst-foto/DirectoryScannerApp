@@ -8,9 +8,9 @@ namespace DirectoryScannerApp.CoreLib;
 /// </summary>
 public sealed class DirectoryScanner
 {
+    private readonly string? _directoryPath;
     public ILogger? Logger { get; init; }
 
-    private readonly string? _directoryPath;
     /// <value>Директория для сканирования</value>
     public required string? DirectoryPath
     {
