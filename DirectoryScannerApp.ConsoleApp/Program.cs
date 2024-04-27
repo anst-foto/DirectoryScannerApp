@@ -1,22 +1,14 @@
 ﻿using DirectoryScannerApp.CoreLib;
+using DirectoryScannerApp.CoreLib.OutputFile;
+using Logger.Console;
 
-var path = @"C:\Users\Elena\Documents\pdf.pdf";
-var fileInfo = new FileInfo(path);
-if (fileInfo.Exists)
+var scanner = new DirectoryScanner
 {
-    Console.WriteLine($"Имя файла: {fileInfo.Name}");
-    Console.WriteLine(fileInfo.FullName);
-}
+    Logger = new LogToConsole(),
+    DirectoryPath = @"C:\Users\Elena\Downloads",
+};
 
-FileInfoDto? f = null;
+var result = scanner.Scan();
 
-try
-{
-    f = new FileInfoDto { Name = "", Extension = "", Path = "", Size = -1 };
-}
-catch (Exception e)
-{
-    Console.WriteLine(e);
-}
-
-Console.WriteLine(f?.FullName);
+var file = new OutputFileInfoToJson(result, "file_infos.json", new LogToConsole());
+file.WriteAll();
